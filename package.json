@@ -1,0 +1,35 @@
+{
+  "name": "fengxun",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@alicloud/pop-core": "^1.8.0",
+    "@koa/cors": "^5.0.0",
+    "@koa/router": "^13.1.0",
+    "axios": "^1.7.9",
+    "basic-auth": "^2.0.1",
+    "dayjs": "^1.11.13",
+    "ioredis": "^5.4.2",
+    "jsonwebtoken": "^9.0.2",
+    "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
+    "koa-json": "^2.0.2",
+    "log4js": "^6.9.1",
+    "module-alias": "^2.2.3",
+    "mysql2": "^3.12.0",
+    "sequelize": "^6.37.5",
+    "zhipuai-sdk-nodejs-v4": "^0.1.12"
+  },
+  "devDependencies": {
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
