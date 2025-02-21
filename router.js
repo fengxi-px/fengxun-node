@@ -96,6 +96,12 @@ router.get("/admin/findUserById", authority, AdminUserController.findUserById);
 router.get("/admin/findUser", authority, AdminUserController.findUser);
 // get UserInfo
 router.get("/admin/getUserInfo", authority, AdminUserController.getUserInfo);
+// 上传文件
+router.post("/admin/addFile", authority, AdminUserController.addFile);
+// 获取文件列表
+router.get("/admin/getFiles", authority, AdminUserController.getFilesByOwner);
+// 删除文件
+router.delete("/admin/deleteFile", authority, AdminUserController.deleteFile);
 
 // wx用户相关接口
 // 获取用户列表

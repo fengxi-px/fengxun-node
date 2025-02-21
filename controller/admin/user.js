@@ -2,6 +2,7 @@ const Validate = require("@/util/validate");
 const User = require("@/model/admin/user");
 const generateToken = require("@/config/jwt");
 const Role = require("@/model/admin/role");
+const File = require("@/model/admin/file");
 
 class UserController {
   async login(ctx, next) {
@@ -61,11 +62,10 @@ class UserController {
     await Validate.emptyCheck(id, "请输入ID", "useId");
 
     // 查询用户是否存在
-    console.log(id, "id");
     const userInfo = await User.findOne({ where: { id } });
     const { nickname, role, avatar, email } = userInfo;
     const roleInfo = await Role.findOne({ where: { name: role } });
-    console.log(roleInfo, "roleInfo.permission", role, id);
+    // console.log(roleInfo, "roleInfo.permission", role, id);
     ctx.send({
       token: generateToken(email),
       nickname,
@@ -159,6 +159,46 @@ class UserController {
     }
     ctx.send(users);
   }
+
+  async addFile(ctx, next) {
+    const { name, url, owner } = ctx.request.body;
+    // 参数校验
+    await Validate.emptyCheck(name, "请输入文件名", "name");
+    await Validate.emptyCheck(url, "请输入文件路径", "url");
+    await Validate.emptyCheck(owner, "请输入文件拥有者", "owner");
+
+    // 创建文件
+    await File.create({ name, url, owner });
+    ctx.send("创建成功");
+  }
+  
+  async getFilesByOwner(ctx, next) {
+    const { owner } = ctx.request.query;
+    // 参数校验
+    await Validate.emptyCheck(owner, "请输入文件拥有者", "owner");
+
+    // 查询文件
+    const files = await File.findAll({ where: { owner } });
+    if (files.length === 0) {
+      ctx.send("文件不存在");
+      return;
+    }
+    ctx.send(files);
+  }
+
+  async deleteFile(ctx, next) {
+    const { id } = ctx.request.query;
+    // 查询文件是否存在
+    const fileInfo = await File.findOne({ where: { id } });
+    if (!fileInfo) {
+      ctx.send("文件不存在");
+      return;
+    }
+    // 删除文件
+    await File.destroy({ where: { id } });
+    ctx.send("删除成功");
+  }
+
 }
 
 module.exports = new UserController();
